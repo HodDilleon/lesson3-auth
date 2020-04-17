@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 const management = require('./lib/management');
 const users = require('./lib/users');
 
@@ -42,6 +43,8 @@ function makeMove(x, y) {
   const winner = getWinner();
   if (winner) {
     game.status = `Завершена. Выиграл игрок ${winner}`;
+  } else if (isDraw()) {
+    game.status = 'Завершена. Ничья';
   }
   return true;
 }
@@ -106,6 +109,15 @@ function getWinner() {
   }
 
   return false;
+}
+
+/**
+ * Проверка на ничью
+ *
+ * @return {boolean}
+ */
+function isDraw() {
+  return game.field.every((row) => row.every((cell) => cell !== 0));
 }
 
 module.exports = {
